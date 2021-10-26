@@ -1,84 +1,213 @@
-﻿using System;
+using System;
+using System.Diagnostics;
 
-namespace кнвннн
+namespace study
 {
     class Program
     {
 
+        // 2. с ref 
+
+
+
+
+        static int[] BubbleSort(ref int[] bst)
+        {
+            Stopwatch stopWatch = new Stopwatch();
+            stopWatch.Start();
+            int temp;
+            for (int i = 0; i < bst.Length; i++)
+            {
+                for (int j = i + 1; j < bst.Length; j++)
+                {
+                    if (bst[i] > bst[j])
+                    {
+                        temp = bst[i];
+                        bst[i] = bst[j];
+                        bst[j] = temp;
+                    }
+                }
+            }
+
+            StopTime(stopWatch);
+            return bst;
+        }
+
+        static int[] BubbleSortNo(ref int[] bst)
+        {
+            Stopwatch stopWatch = new Stopwatch();
+            stopWatch.Start();
+            int temp;
+            for (int i = bst.Length-1; i >0; i--)
+            {
+               
+                for (int j = 0; j < i; j++)
+                {
+                    if (bst[j] < bst[j+1])
+                    {
+                        temp = bst[j];
+                        bst[j] = bst[j+1];
+                        bst[j+1] = temp;
+                    }
+                }
+            
+        }
+
+            StopTime(stopWatch);
+            return bst;
+        }
+
+        static int[] ViborSort(ref int[] bst, ref int[] b1)
+        {
+            b1 = bst;
+
+            Stopwatch stopWatch = new Stopwatch();
+            stopWatch.Start();
+            for (int i = 0; i < bst.Length - 1; i++)
+            {
+                //поиск минимального числа
+                int min = i;
+                for (int j = i + 1; j < bst.Length; j++)
+                {
+                    if (bst[j] < bst[min])
+                    {
+                        min = j;
+                    }
+                }
+                //обмен элементов
+                int temp = bst[min];
+                bst[min] = bst[i];
+                bst[i] = temp;
+            }
+            StopTime(stopWatch);
+            return bst;
+        }
+
+
+
+        static int[] InsertionSort(ref int[] bst)
+        {
+
+
+            Stopwatch stopWatch = new Stopwatch();
+            stopWatch.Start();
+
+
+            int newElement, location;
+
+            for (int i = 1; i < bst.Length; i++)
+            {
+                newElement = bst[i];
+                location = i - 1;
+                while (location >= 0 && bst[location] > newElement)
+                {
+                    bst[location + 1] = bst[location];
+                    location = location - 1;
+                }
+                bst[location + 1] = newElement;
+            }
+
+            StopTime(stopWatch);
+            return bst;
+        }
+
+
+        static int[] InsertionSortNo(ref int[] bst)
+        {
+
+
+            Stopwatch stopWatch = new Stopwatch();
+            stopWatch.Start();
+
+
+            int newElement, location;
+
+            for (int i = 1; i < bst.Length; i++)
+            {
+                newElement = bst[i];
+                location = i - 1;
+                while (location = bst.Length && bst[location] < newElement)
+                {
+                    bst[location + 1] = bst[location];
+                    location = location - 1;
+                }
+                bst[location + 1] = newElement;
+            }
+
+            StopTime(stopWatch);
+            return bst;
+        }
 
         static void Main(string[] args)
         {
-        link:
-            Console.WriteLine("Hello World!");
-            string koordinate = Console.ReadLine();
-            string abcd = "0abcdefgh";
-            //int[] num = new int[] { 1, 2, 3, 4, 5, 6, 7, 8 };
-            string snum = "012345678";
 
-            int kabc = 0;
-            int knum = 0;
+            Console.WriteLine("Введите число элементов в массиве");
+            int a1 = int.Parse(Console.ReadLine());
+            int[] ast = new int[a1];
+            Array(ref ast);
+            int[] b1 = ast;
+            Vvod(ref ast);
+
+            Console.WriteLine("Пузырь");
+          //  BubbleSortNo(ref ast );
+
+            // 
+
+           // BubbleSortNo(ref ast);
+            // Vvod(ref ast);
+
+            Vvod(ref ast);
+            Console.WriteLine("Вставка");
+            InsertionSortNo(ref ast);
+
+            Console.WriteLine("Выборка");
+         //   ViborSort(ref ast, ref b1);
 
 
-            if (koordinate.Length != 2)
-            {
-                Console.WriteLine("2 символа");
-
-
-                goto link;
-            }
-
-
-            for (int k = 0; k < 2; k++)
-            {
-                for (int j = 0; j < abcd.Length; j++)
-                {
-
-                    if (koordinate[k] == abcd[j])
-                    {
-                        kabc = abcd.IndexOf(koordinate[k]);
-                        Console.Error.WriteLine("abcdefgh");
-                    }
-
-                    else if (koordinate[k] == snum[j])
-                    {
-                        knum = snum.IndexOf(koordinate[k]);
-                        Console.Error.WriteLine("12345678");
-
-                    }
-
-                }
-
-            }
-
-            if ((knum == 0) || (kabc == 0))
-            {
-                Console.WriteLine("За пределом ");
-                goto link;
-
-            }
-            Console.WriteLine($"knum{knum}, kabc{kabc}");
+            //  Vvod(ref ast);
 
 
 
-            //решение задачи
-            int s = 0;
-            int d = 0;
-            int[] dx = { 0, -2, -2, 2, 2, 1, -1, 1, -1 };
-            int[] dy = { 0, -1, 1, -1, 1, 2, -2, -2, 2 };
-
-            for (int i = 1; i < dx.Length; i++)
-            {
-                s = knum + dx[i];
-                d = kabc + dy[i];
-                if (((s < snum.Length) && (s > 0)) && ((d < abcd.Length) && (d > 0)))
-                {
-                    Console.WriteLine($"{abcd[d]} {snum[s]}");
-
-                }
-
-            }
-            Console.WriteLine($"Конец - Я молодец");
         }
+
+
+        static int[] Array(ref int[] bst)
+        {
+            Random rand = new Random();
+            for (int i = 0; i < bst.Length; i++)
+            {
+
+                bst[i] = rand.Next(0,10);
+
+
+            }
+            return bst;
+        }
+        static int[] Vvod(ref int[] bst)
+        {
+
+            for (int i = 0; i < bst.Length; i++)
+            {
+                Console.Write(bst[i] + " ");
+            }
+
+            return bst;
+        }
+
+        static void StopTime(Stopwatch stopWatch)
+        {
+            stopWatch.Stop();
+            TimeSpan ts = stopWatch.Elapsed;
+            // Format and display the TimeSpan value.
+            string elapsedTime = String.Format("{0:00}:{1:00}:{2:00}.{3:00}",
+            ts.Hours, ts.Minutes, ts.Seconds,
+            ts.Milliseconds / 10);
+
+            Console.WriteLine(elapsedTime);
+
+
+
+        }
+
     }
 }
-
